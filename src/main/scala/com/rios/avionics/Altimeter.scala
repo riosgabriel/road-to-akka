@@ -1,6 +1,7 @@
 package com.rios.avionics
 
 import akka.actor.{Actor, ActorLogging, Cancellable}
+import com.rios.avionics.Altimeter.{AltitudeUpdate, RateChange}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration._
@@ -9,10 +10,11 @@ object Altimeter {
 
   case class RateChange(amount: Float)
   case class AltitudeUpdate(altitude: Double)
+
+  def apply() = new Altimeter with ProductionEventSource
 }
 
-class Altimeter extends Actor with ActorLogging with EventSource {
-  import Altimeter._
+class Altimeter extends Actor with ActorLogging { this: EventSource =>
 
   // in feet
   val ceiling = 43000

@@ -10,7 +10,14 @@ object EventSource {
 
 }
 
-trait EventSource { this: Actor =>
+trait EventSource {
+
+  def sendEvent[T](event: T): Unit
+  def eventSourceReceive: Actor.Receive
+
+}
+
+trait ProductionEventSource extends EventSource { this: Actor =>
 
   var listeners = Vector.empty[ActorRef]
 
@@ -24,4 +31,5 @@ trait EventSource { this: Actor =>
       listeners = listeners.filter(_ != listener)
   }
 }
+
 

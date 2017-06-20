@@ -12,7 +12,7 @@ object Plane {
 
 class Plane extends Actor with ActorLogging {
 
-  val altimeter = context.actorOf(Props[Altimeter])
+  val altimeter = context.actorOf(Props(Altimeter()))
 
   val controls = context.actorOf(Props(classOf[ControlSurfaces], altimeter))
 
