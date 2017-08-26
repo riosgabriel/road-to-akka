@@ -32,7 +32,7 @@ class AltimeterSpec extends TestKit(ActorSystem("AltimeterSpec"))
 
   def slicedAltimeter = new Altimeter with EventSourceSpy
 
-  def actor() = {
+  def actor(): (TestActorRef[Altimeter], Altimeter) = {
     val a = TestActorRef[Altimeter](Props(slicedAltimeter))
     (a, a.underlyingActor)
   }
